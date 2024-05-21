@@ -1,0 +1,215 @@
+---
+title: "Additional examples and notes"
+author: '2024815272'
+date: "2024-05-19"
+output: word_document
+---
+
+```{r echo=TRUE}
+# BASICS:
+A = matrix(c(1,2,3,4,5,6), ncol = 3)
+A
+
+A1 = array(c(1,2,3,4,5,6), dim = c(2,2,3))
+A1
+# transpose: t(A) # multiply matrix: A%*%t(A)
+# determinant: det(A)
+
+x = c(a=1,b=2)
+is.factor(x)
+as.factor(x)
+
+# seq(start,end,difference)
+seq(1,100,5)
+
+x1 = c('1','2','3','4','5')
+y = as.numeric(x)
+y
+is.numeric(y)
+is.numeric(x1)
+
+rep(2,10)
+
+# data with missing value
+z = c(1:3,NA)
+is.na(z)
+# remove missing value
+y1 = z[!is.na(z)]
+y1
+```
+```{r echo=TRUE}
+sample(1:10,10,replace = TRUE)
+sample(1:10,10,replace = FALSE)
+
+# Create a data frame with different column types
+df <- data.frame(
+Person = 1:4,
+Education_level = factor(c("Level1", "Level2", "Level1", "Level2")), 
+Married = c(TRUE, FALSE, TRUE, FALSE),
+Employed = c("YES","NO","YES","YES")
+)
+print(df)
+# Convert the data frame to a numeric matrix using data.matrix() 
+numeric_matrix <- data.matrix(df)
+# Print the resulting numeric matrx
+print(numeric_matrix)
+
+A2 = matrix(c(13, -4, 2, -4, 11, -2, 2, -2, 8), nrow = 3)
+z = eigen(A2)
+z$values
+
+# reading data : 
+# data = read.table("C:/Users/ChakrabortyN/Desktop/file1.txt", header = T)
+# data = read.csv("fil.name.csv", header = T)
+# data = read.table(file, header = FALSE, sep = "", dec = ".")
+
+#quantile(dat$Sepal.Length, 0.25) ## first quartile quantile
+#(dat$Sepal.Length, 0.75) ## third quartile 
+#IQR(dat$Sepal.Length) ## Interquartile range
+```
+
+
+```{r echo=TRUE}
+#normal distribution:
+#dnorm(x,mean,sd,...) ### calculate the pdf of normal distribution at the point x.
+#pnorm(x,mean,sd,...) ### calculate the cdf of normal distribution at the point x.
+#qnorm(p,mean,sd,...) ### calculate the point x at which P[X≤x] > p
+#rnorm(n,mean,sd,...) ### draw random sample of size n from a normal distribution.
+
+#uniform distribution:
+#dunif(x,min,max) ### calculate the pdf of uniform distribution at the point x.
+#punif(x, min,max) ### calculate the cdf of uniform distribution at the point x.
+#qunif(p, min,max) ### calculate the point x at which P[X≤x] > p
+#runif(n, min,max) ### draw random sample of size n from a uniform distribution
+
+#binomial distribution:
+#dbinom(x,size,prob) ### calculate the pdf of binomial distribution at the point x.
+#pbinom(x, size,prob) ### calculate the cdf of binomial distribution at the point x.
+#qbinom(p, size,prob) ### calculate the point x at which P[X≤x] > p
+#rbinom(n, size,prob) ### draw random sample of size n from a binomial distribution.
+```
+
+
+```{r echo=TRUE}
+#LOOPS:
+
+#if (condition) {
+# Code to execute if condition is TRUE #} 
+# else {
+# Code to execute if condition is FALSE #}
+
+f = 10
+if (f > 5){
+  # If x>5 check if even or odd
+  if(f %% 2 == 0){
+    print("x is greater than 5 and even")
+  } else {
+    print("x is greater than 5 and odd")
+  }
+  } else {
+    print("x is less and or equal to 5")
+  }
+
+# for loop for total of sequence
+start = 1
+end = 10
+step = 2
+total = 0
+
+for(i in seq(from=start, to=end, by=step)){
+  print(i)
+  total = total + i
+}
+print(total)
+
+# while loop for sum of factorial
+n = 5
+factorial = 1
+i = 1
+
+while (i <= n){
+  print(i)
+  factorial = factorial * i
+  i = i +1
+}
+print(factorial)
+
+# Break repeat loops
+repeat{
+g = sample(1:10, 1)
+if(g>7){
+  break
+}
+}
+print(g)
+```
+
+```{r echo=TRUE}
+# apply, lapply, sapply
+# Apply function to each row of a matrix(works same for column)
+m <- matrix(1:12, nrow = 4)
+m
+apply(m,1,mean)
+
+# Apply function to each element of a list
+l <- list(a = c(1, 2, 3), b = c(4, 5, 6))
+lapply(l, mean)
+
+# Simplify output using sapply
+l <- list(a = c(1, 2, 3), b = c(4, 5, 6)) 
+sapply(l, mean)
+```
+
+```{r echo=TRUE}
+# GRAPHS:
+#Here’s an example code in R to draw 100 random samples of size 5 from a standard normal distribution, calculate the mean for each sample, and create a line plot:
+library(ggplot2) 
+library(hrbrthemes)
+set.seed(123)
+samples = matrix(rnorm(100*5), ncol=5)
+samples_means = apply(samples,1,mean)
+df2 = data.frame(samples_means)
+
+ggplot(df2, aes(x=1:nrow(df2), y=samples_means)) +
+  geom_line(linetype="dashed", color="red") +
+  xlab("SampleNumber")+
+  ylab("SampleMean") +
+  ggtitle("Line Plot of 100 Samples from Standard Normal Dist.") +
+  theme_classic()
+
+#library(GGally)
+# data = data.frame(airquality$Ozone,airquality$Wind, airquality$Temp)
+# ggpairs(data)
+
+#position = "dodge" places overlapping objects directly beside one another. This makes it easier to compare individual values.
+# ggplot(data = diamonds) +
+#geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+ 
+# geom_errorbar(aes(ymin = group1 - 1, ymax = group1 + 1), width = 0.2, color
+= "blue") 
+
+#ggplot(data_long, aes(x = value, fill = variable)) + 
+#geom_histogram(binwidth = 0.5, color = "black", alpha = 0.5) + 
+#facet_wrap(~ variable, nrow = 1) +
+#labs(x = "Value", y = "Frequency", title = "Multiple histograms")
+
+```
+
+
+```{r echo=TRUE}
+# OPERATORS:
+ # Define two vectors
+x3 <- c(1, 3, 5, 7) 
+y3 <- c(2, 4, 6, 8)
+# Check which elements of x are in y
+x3 %in% y3
+# Define a new vector
+z3 <- c(2, 4, 5, 8)
+# Check which elements of x are in z
+x3 %in% z3
+
+```
+
+
+
+
